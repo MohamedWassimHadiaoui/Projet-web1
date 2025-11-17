@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum - PeaceConnect</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="index.html" class="navbar-brand">
+                    <span>🕊️</span>
+                    <span>PeaceConnect</span>
+                </a>
+                <button class="navbar-toggle" aria-label="Menu">☰</button>
+                <ul class="navbar-menu">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="forum.html" class="active">Forum</a></li>
+                    <li><a href="events.html">Événements</a></li>
+                    <li><a href="dashboard.php" class="btn btn-outline">Admin</a></li>
+                    <li><a href="help-request.php">Demander de l'aide</a></li>
+                    <li><a href="profile.html">Mon Profil</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Forum Section -->
+    <section class="section">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h1>Forum de la communauté</h1>
+                    <p style="color: var(--color-text-light);">Partagez vos expériences et échangez avec la communauté</p>
+                </div>
+                <button class="btn btn-primary" data-modal="createPostModal">
+                    ➕ Créer un nouveau post
+                </button>
+            </div>
+
+            <!-- Filtres -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="form-label">Rechercher</label>
+                    <input type="text" class="form-control filter-input" data-filter=".forum-post" placeholder="Rechercher dans les posts...">
+                </div>
+                <div class="filter-group">
+                    <label class="form-label">Catégorie</label>
+                    <select class="form-control">
+                        <option value="">Toutes les catégories</option>
+                        <option value="support">Soutien</option>
+                        <option value="experience">Expériences</option>
+                        <option value="advice">Conseils</option>
+                        <option value="discussion">Discussion</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="form-label">Trier par</label>
+                    <select class="form-control">
+                        <option value="recent">Plus récent</option>
+                        <option value="popular">Plus populaire</option>
+                        <option value="comments">Plus de commentaires</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tags populaires -->
+            <div style="margin-bottom: 2rem;">
+                <p style="font-weight: 600; margin-bottom: 0.5rem;">Tags populaires :</p>
+                <div>
+                    <span class="tag tag-primary">#violence</span>
+                    <span class="tag tag-primary">#discrimination</span>
+                    <span class="tag tag-secondary">#soutien</span>
+                    <span class="tag tag-primary">#harcèlement</span>
+                    <span class="tag tag-secondary">#médiation</span>
+                    <span class="tag tag-primary">#inclusion</span>
+                    <span class="tag tag-secondary">#paix</span>
+                </div>
+            </div>
+
+            <!-- Liste des posts -->
+            <div id="forumPosts">
+                <!-- Post 1 -->
+                <div class="card forum-post" style="margin-bottom: 1.5rem;">
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #1e3a8a, #16a34a); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">SM</div>
+                                <div>
+                                    <strong>Sophie Martin</strong>
+                                    <p style="font-size: 0.875rem; color: var(--color-text-light); margin: 0;">Il y a 2 heures</p>
+                                </div>
+                            </div>
+                            <span class="tag tag-primary">#soutien</span>
+                        </div>
+                        <h3 style="margin-bottom: 0.5rem;">Besoin de conseils pour signaler un incident</h3>
+                        <p>Bonjour à tous, j'ai été témoin d'un incident de discrimination hier et je ne sais pas comment procéder pour le signaler. Quelqu'un a-t-il déjà vécu une situation similaire ? Merci pour votre aide.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-outline btn-sm">👍 12</button>
+                            <button class="btn btn-outline btn-sm">💬 5 commentaires</button>
+                            <button class="btn btn-outline btn-sm">🔖 Partager</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 2 -->
+                <div class="card forum-post" style="margin-bottom: 1.5rem;">
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #16a34a, #1e3a8a); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">JD</div>
+                                <div>
+                                    <strong>Jean Dubois</strong>
+                                    <p style="font-size: 0.875rem; color: var(--color-text-light); margin: 0;">Il y a 5 heures</p>
+                                </div>
+                            </div>
+                            <span class="tag tag-secondary">#expérience</span>
+                        </div>
+                        <h3 style="margin-bottom: 0.5rem;">Mon expérience avec la médiation communautaire</h3>
+                        <p>Je voulais partager mon expérience positive avec le service de médiation de PeaceConnect. Après un conflit avec mon voisinage, j'ai utilisé la plateforme et j'ai reçu un accompagnement exceptionnel. La médiation a permis de résoudre le problème de manière pacifique.</p>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-outline btn-sm">👍 28</button>
+                            <button class="btn btn-outline btn-sm">💬 8 commentaires</button>
+                            <button class="btn btn-outline btn-sm">🔖 Partager</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 3 -->
+                <div class="card forum-post" style="margin-bottom: 1.5rem;">
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #1e3a8a, #16a34a); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">AM</div>
+                                <div>
+                                    <strong>Amélie Moreau</strong>
+                                    <p style="font-size: 0.875rem; color: var(--color-text-light); margin: 0;">Il y a 1 jour</p>
+                                </div>
+                            </div>
+                            <span class="tag tag-primary">#conseils</span>
+                        </div>
+                        <h3 style="margin-bottom: 0.5rem;">Ressources pour lutter contre le harcèlement</h3>
+                        <p>Je partage une liste de ressources utiles pour ceux qui font face au harcèlement : numéros d'urgence, associations d'aide, guides pratiques. N'hésitez pas à ajouter vos propres ressources !</p>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-outline btn-sm">👍 45</button>
+                            <button class="btn btn-outline btn-sm">💬 15 commentaires</button>
+                            <button class="btn btn-outline btn-sm">🔖 Partager</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post 4 -->
+                <div class="card forum-post" style="margin-bottom: 1.5rem;">
+                    <div class="card-body">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #16a34a, #1e3a8a); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">PL</div>
+                                <div>
+                                    <strong>Pierre Laurent</strong>
+                                    <p style="font-size: 0.875rem; color: var(--color-text-light); margin: 0;">Il y a 2 jours</p>
+                                </div>
+                            </div>
+                            <span class="tag tag-secondary">#discussion</span>
+                        </div>
+                        <h3 style="margin-bottom: 0.5rem;">Comment promouvoir l'inclusion dans notre quartier ?</h3>
+                        <p>Discussion ouverte : quelles actions concrètes pouvons-nous mettre en place pour favoriser l'inclusion et la diversité dans nos communautés locales ? Partagez vos idées et expériences !</p>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-outline btn-sm">👍 67</button>
+                            <button class="btn btn-outline btn-sm">💬 23 commentaires</button>
+                            <button class="btn btn-outline btn-sm">🔖 Partager</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn" disabled>Précédent</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">Suivant</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modale: Créer un post -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Créer un nouveau post</h2>
+                <button class="modal-close" data-close-modal>&times;</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="postTitle" class="form-label">Titre *</label>
+                        <input type="text" id="postTitle" class="form-control" placeholder="Titre de votre post">
+                    </div>
+                    <div class="form-group">
+                        <label for="postCategory" class="form-label">Catégorie *</label>
+                        <select id="postCategory" class="form-control">
+                            <option value="">Sélectionner...</option>
+                            <option value="support">Soutien</option>
+                            <option value="experience">Expériences</option>
+                            <option value="advice">Conseils</option>
+                            <option value="discussion">Discussion</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="postContent" class="form-label">Contenu *</label>
+                        <textarea id="postContent" class="form-control" rows="6" placeholder="Rédigez votre message..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tags</label>
+                        <div>
+                            <span class="tag tag-primary" style="cursor: pointer;">#violence</span>
+                            <span class="tag tag-primary" style="cursor: pointer;">#discrimination</span>
+                            <span class="tag tag-secondary" style="cursor: pointer;">#soutien</span>
+                            <span class="tag tag-primary" style="cursor: pointer;">#harcèlement</span>
+                            <span class="tag tag-secondary" style="cursor: pointer;">#médiation</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" data-close-modal>Annuler</button>
+                <button class="btn btn-primary">Publier</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: var(--color-text); color: white; padding: 2rem 0; margin-top: 4rem;">
+        <div class="container">
+            <div style="text-align: center;">
+                <p style="margin-bottom: 1rem;">&copy; 2024 PeaceConnect. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
+

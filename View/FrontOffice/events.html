@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements - PeaceConnect</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="index.html" class="navbar-brand">
+                    <span>🕊️</span>
+                    <span>PeaceConnect</span>
+                </a>
+                <button class="navbar-toggle" aria-label="Menu">☰</button>
+                <ul class="navbar-menu">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="forum.html">Forum</a></li>
+                    <li><a href="events.html" class="active">Événements</a></li>
+                    <li><a href="dashboard.php" class="btn btn-outline">Admin</a></li>
+                    <li><a href="help-request.php">Demander de l'aide</a></li>
+                    <li><a href="profile.html">Mon Profil</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Événements Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h1>Événements de la communauté</h1>
+                <p>Découvrez et participez aux événements locaux et en ligne pour promouvoir la paix et l'inclusion</p>
+            </div>
+
+            <!-- Filtres -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label class="form-label">Rechercher</label>
+                    <input type="text" class="form-control filter-input" data-filter=".event-card" placeholder="Rechercher un événement...">
+                </div>
+                <div class="filter-group">
+                    <label class="form-label">Type</label>
+                    <select class="form-control">
+                        <option value="">Tous les types</option>
+                        <option value="online">En ligne</option>
+                        <option value="offline">En présentiel</option>
+                        <option value="hybrid">Hybride</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="form-label">Date</label>
+                    <select class="form-control">
+                        <option value="">Toutes les dates</option>
+                        <option value="today">Aujourd'hui</option>
+                        <option value="week">Cette semaine</option>
+                        <option value="month">Ce mois</option>
+                        <option value="upcoming">À venir</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="form-label">Catégorie</label>
+                    <select class="form-control">
+                        <option value="">Toutes les catégories</option>
+                        <option value="workshop">Atelier</option>
+                        <option value="conference">Conférence</option>
+                        <option value="meetup">Rencontre</option>
+                        <option value="training">Formation</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Grille d'événements -->
+            <div class="grid grid-3" id="eventsGrid">
+                <!-- Événement 1 -->
+                <div class="card event-card" style="position: relative;">
+                    <div style="position: absolute; top: 1rem; right: 1rem;">
+                        <span class="badge badge-success">En ligne</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📅</span>
+                            <span>15 Mars 2024, 18h00</span>
+                        </div>
+                        <h3 class="card-title">Atelier : Médiation et résolution de conflits</h3>
+                        <p style="margin-bottom: 1rem;">Apprenez les techniques de base de la médiation et découvrez comment résoudre les conflits de manière pacifique dans votre communauté.</p>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>👥</span>
+                            <span>25 participants inscrits</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag tag-primary">#médiation</span>
+                            <span class="tag tag-secondary">#formation</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-sm" data-modal="eventModal1">Voir détails</button>
+                        <button class="btn btn-outline btn-sm">S'inscrire</button>
+                    </div>
+                </div>
+
+                <!-- Événement 2 -->
+                <div class="card event-card" style="position: relative;">
+                    <div style="position: absolute; top: 1rem; right: 1rem;">
+                        <span class="badge badge-info">Présentiel</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📅</span>
+                            <span>22 Mars 2024, 14h00</span>
+                        </div>
+                        <h3 class="card-title">Conférence : L'inclusion dans nos quartiers</h3>
+                        <p style="margin-bottom: 1rem;">Une conférence interactive sur les moyens de promouvoir l'inclusion et la diversité dans nos communautés locales.</p>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📍</span>
+                            <span>Paris, Centre communautaire</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>👥</span>
+                            <span>45 participants inscrits</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag tag-primary">#inclusion</span>
+                            <span class="tag tag-secondary">#communauté</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-sm" data-modal="eventModal2">Voir détails</button>
+                        <button class="btn btn-outline btn-sm">S'inscrire</button>
+                    </div>
+                </div>
+
+                <!-- Événement 3 -->
+                <div class="card event-card" style="position: relative;">
+                    <div style="position: absolute; top: 1rem; right: 1rem;">
+                        <span class="badge badge-warning">Hybride</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📅</span>
+                            <span>30 Mars 2024, 10h00</span>
+                        </div>
+                        <h3 class="card-title">Formation : Prévention de la violence</h3>
+                        <p style="margin-bottom: 1rem;">Formation complète sur la prévention de la violence, la reconnaissance des signes avant-coureurs et les actions à entreprendre.</p>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📍</span>
+                            <span>Lyon + En ligne</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>👥</span>
+                            <span>60 participants inscrits</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag tag-primary">#prévention</span>
+                            <span class="tag tag-secondary">#formation</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-sm" data-modal="eventModal3">Voir détails</button>
+                        <button class="btn btn-outline btn-sm">S'inscrire</button>
+                    </div>
+                </div>
+
+                <!-- Événement 4 -->
+                <div class="card event-card" style="position: relative;">
+                    <div style="position: absolute; top: 1rem; right: 1rem;">
+                        <span class="badge badge-success">En ligne</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📅</span>
+                            <span>5 Avril 2024, 19h00</span>
+                        </div>
+                        <h3 class="card-title">Rencontre : Partage d'expériences</h3>
+                        <p style="margin-bottom: 1rem;">Une soirée conviviale pour partager vos expériences, vos réussites et vos défis dans la promotion de la paix.</p>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>👥</span>
+                            <span>18 participants inscrits</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag tag-secondary">#rencontre</span>
+                            <span class="tag tag-primary">#partage</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-sm" data-modal="eventModal4">Voir détails</button>
+                        <button class="btn btn-outline btn-sm">S'inscrire</button>
+                    </div>
+                </div>
+
+                <!-- Événement 5 -->
+                <div class="card event-card" style="position: relative;">
+                    <div style="position: absolute; top: 1rem; right: 1rem;">
+                        <span class="badge badge-info">Présentiel</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📅</span>
+                            <span>12 Avril 2024, 16h00</span>
+                        </div>
+                        <h3 class="card-title">Atelier : Communication non-violente</h3>
+                        <p style="margin-bottom: 1rem;">Découvrez les principes de la communication non-violente pour améliorer vos relations et résoudre les conflits.</p>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📍</span>
+                            <span>Marseille, Salle communautaire</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>👥</span>
+                            <span>30 participants inscrits</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag tag-primary">#communication</span>
+                            <span class="tag tag-secondary">#atelier</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-sm" data-modal="eventModal5">Voir détails</button>
+                        <button class="btn btn-outline btn-sm">S'inscrire</button>
+                    </div>
+                </div>
+
+                <!-- Événement 6 -->
+                <div class="card event-card" style="position: relative;">
+                    <div style="position: absolute; top: 1rem; right: 1rem;">
+                        <span class="badge badge-success">En ligne</span>
+                    </div>
+                    <div class="card-body">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>📅</span>
+                            <span>20 Avril 2024, 20h00</span>
+                        </div>
+                        <h3 class="card-title">Webinaire : Droits et recours</h3>
+                        <p style="margin-bottom: 1rem;">Un webinaire informatif sur vos droits en cas de discrimination, harcèlement ou violence, et les recours disponibles.</p>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; color: var(--color-text-light); font-size: 0.875rem;">
+                            <span>👥</span>
+                            <span>52 participants inscrits</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag tag-primary">#droits</span>
+                            <span class="tag tag-secondary">#juridique</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary btn-sm" data-modal="eventModal6">Voir détails</button>
+                        <button class="btn btn-outline btn-sm">S'inscrire</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="pagination-btn" disabled>Précédent</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">Suivant</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modale: Détails événement (exemple) -->
+    <div id="eventModal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Atelier : Médiation et résolution de conflits</h2>
+                <button class="modal-close" data-close-modal>&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 1.5rem;">
+                    <p><strong>📅 Date :</strong> 15 Mars 2024, 18h00 - 20h00</p>
+                    <p><strong>📍 Lieu :</strong> En ligne (lien Zoom envoyé après inscription)</p>
+                    <p><strong>👥 Participants :</strong> 25 inscrits (max 30)</p>
+                    <p><strong>💰 Prix :</strong> Gratuit</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem;">Description</h3>
+                    <p>Cet atelier interactif vous permettra d'apprendre les techniques de base de la médiation et de découvrir comment résoudre les conflits de manière pacifique dans votre communauté. Animé par des médiateurs expérimentés, vous pratiquerez des exercices pratiques et des mises en situation.</p>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <h3 style="margin-bottom: 1rem;">Programme</h3>
+                    <ul>
+                        <li>Introduction à la médiation (30 min)</li>
+                        <li>Techniques de communication (45 min)</li>
+                        <li>Exercices pratiques (30 min)</li>
+                        <li>Questions-réponses (15 min)</li>
+                    </ul>
+                </div>
+                <div>
+                    <span class="tag tag-primary">#médiation</span>
+                    <span class="tag tag-secondary">#formation</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" data-close-modal>Fermer</button>
+                <button class="btn btn-primary">S'inscrire à l'événement</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="background-color: var(--color-text); color: white; padding: 2rem 0; margin-top: 4rem;">
+        <div class="container">
+            <div style="text-align: center;">
+                <p style="margin-bottom: 1rem;">&copy; 2024 PeaceConnect. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
+
