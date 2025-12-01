@@ -26,7 +26,11 @@ CREATE TABLE commentaire (
     date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     date_modification DATETIME DEFAULT NULL,
     nombre_likes INT DEFAULT 0,
-    FOREIGN KEY (id_publication) REFERENCES publication(id_publication) ON DELETE CASCADE
+    CONSTRAINT fk_commentaire_publication 
+        FOREIGN KEY (id_publication) 
+        REFERENCES publication(id_publication) 
+        ON DELETE CASCADE 
+        ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE INDEX idx_publication_categorie ON publication(categorie);

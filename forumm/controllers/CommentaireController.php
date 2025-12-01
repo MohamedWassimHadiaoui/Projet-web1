@@ -1,5 +1,5 @@
 <?php
-require_once dirname(__DIR__) . '/config.php';
+require_once __DIR__ . '/config.php';
 require_once dirname(__DIR__) . '/models/Commentaire.php';
 
 class CommentaireController {
@@ -14,6 +14,19 @@ class CommentaireController {
         try {
             $this->pdo->beginTransaction();
             
+            // Vérifier que la publication existe (validation de la clé étrangère)
+            $sqlCheck = "SELECT id_publication FROM publication WHERE id_publication = :id";
+            $stmtCheck = $this->pdo->prepare($sqlCheck);
+            $stmtCheck->bindValue(':id', $commentaire->getIdPublication(), PDO::PARAM_INT);
+            $stmtCheck->execute();
+            
+            if (!$stmtCheck->fetch()) {
+                $this->pdo->rollBack();
+                error_log("Erreur : La publication avec l'ID " . $commentaire->getIdPublication() . " n'existe pas");
+                return false;
+            }
+            
+            // Insérer le commentaire
             $sql = "INSERT INTO commentaire (id_publication, contenu, auteur, date_creation) 
                     VALUES (:id_publication, :contenu, :auteur, NOW())";
             
@@ -25,6 +38,7 @@ class CommentaireController {
             if ($stmt->execute()) {
                 $id_commentaire = $this->pdo->lastInsertId();
                 
+                // Mettre à jour le nombre de commentaires dans la publication
                 $sqlUpdate = "UPDATE publication SET nombre_commentaires = nombre_commentaires + 1 
                              WHERE id_publication = :id";
                 $stmtUpdate = $this->pdo->prepare($sqlUpdate);
@@ -120,21 +134,29 @@ class CommentaireController {
         try {
             $this->pdo->beginTransaction();
             
-            $commentaire = $this->getCommentaireById($id_commentaire);
-            if (!$commentaire) {
+            // Récupérer l'id_publication avant de supprimer le commentaire
+            $sqlGet = "SELECT id_publication FROM commentaire WHERE id_commentaire = :id";
+            $stmtGet = $this->pdo->prepare($sqlGet);
+            $stmtGet->bindValue(':id', $id_commentaire, PDO::PARAM_INT);
+            $stmtGet->execute();
+            $result = $stmtGet->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$result) {
                 $this->pdo->rollBack();
                 return false;
             }
             
-            $id_publication = $commentaire->getIdPublication();
+            $id_publication = $result['id_publication'];
             
+            // Supprimer le commentaire
             $sql = "DELETE FROM commentaire WHERE id_commentaire = :id";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':id', $id_commentaire, PDO::PARAM_INT);
             
             if ($stmt->execute()) {
+                // Décrémenter le nombre de commentaires dans la publication
                 $sqlUpdate = "UPDATE publication SET nombre_commentaires = nombre_commentaires - 1 
-                             WHERE id_publication = :id";
+                             WHERE id_publication = :id AND nombre_commentaires > 0";
                 $stmtUpdate = $this->pdo->prepare($sqlUpdate);
                 $stmtUpdate->bindValue(':id', $id_publication, PDO::PARAM_INT);
                 $stmtUpdate->execute();
@@ -160,6 +182,115 @@ class CommentaireController {
             return $stmt->execute();
         } catch (PDOException $e) {
             error_log("Erreur lors de l'incrémentation des likes : " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Récupère tous les commentaires avec les informations de leur publication en utilisant INNER JOIN
+     * @return array|false Retourne un tableau associatif avec les commentaires et leurs publications, ou false en cas d'erreur
+     */
+    public function listCommentairesWithPublication() {
+        try {
+            $sql = "SELECT 
+                        c.id_commentaire, c.id_publication, c.contenu, c.auteur, 
+                        c.date_creation, c.date_modification, c.nombre_likes,
+                        p.titre as pub_titre, p.categorie as pub_categorie, p.auteur as pub_auteur
+                    FROM commentaire c
+                    INNER JOIN publication p ON c.id_publication = p.id_publication
+                    ORDER BY c.date_creation DESC";
+            
+            $stmt = $this->pdo->query($sql);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $commentaires = array();
+            foreach ($results as $row) {
+                $com = new Commentaire();
+                $com->setIdCommentaire($row['id_commentaire']);
+                $com->setIdPublication($row['id_publication']);
+                $com->setContenu($row['contenu']);
+                $com->setAuteur($row['auteur']);
+                $com->setDateCreation($row['date_creation']);
+                $com->setDateModification($row['date_modification']);
+                $com->setNombreLikes($row['nombre_likes']);
+                
+                // Ajouter les informations de la publication dans un tableau associatif
+                $comData = array(
+                    'commentaire' => $com,
+                    'publication' => array(
+                        'titre' => $row['pub_titre'],
+                        'categorie' => $row['pub_categorie'],
+                        'auteur' => $row['pub_auteur']
+                    )
+                );
+                $commentaires[] = $comData;
+            }
+            
+            return $commentaires;
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la récupération des commentaires avec publications : " . $e->getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Récupère les commentaires d'une publication avec les informations de la publication en utilisant INNER JOIN
+     * @param int $id_publication
+     * @return array|false Retourne un tableau associatif avec 'publication' et 'commentaires', ou false en cas d'erreur
+     */
+    public function listCommentairesByPublicationWithJoin($id_publication) {
+        try {
+            $sql = "SELECT 
+                        c.id_commentaire, c.id_publication, c.contenu, c.auteur, 
+                        c.date_creation, c.date_modification, c.nombre_likes,
+                        p.titre as pub_titre, p.contenu as pub_contenu, p.categorie as pub_categorie,
+                        p.tags as pub_tags, p.auteur as pub_auteur, p.date_creation as pub_date_creation
+                    FROM commentaire c
+                    INNER JOIN publication p ON c.id_publication = p.id_publication
+                    WHERE c.id_publication = :id
+                    ORDER BY c.date_creation ASC";
+            
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':id', $id_publication, PDO::PARAM_INT);
+            $stmt->execute();
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            if (empty($results)) {
+                return false;
+            }
+            
+            // Créer l'objet Publication à partir de la première ligne
+            $firstRow = $results[0];
+            require_once dirname(__DIR__) . '/models/Publication.php';
+            $pub = new Publication();
+            $pub->setIdPublication($firstRow['id_publication']);
+            $pub->setTitre($firstRow['pub_titre']);
+            $pub->setContenu($firstRow['pub_contenu']);
+            $pub->setCategorie($firstRow['pub_categorie']);
+            $pub->setTags($firstRow['pub_tags']);
+            $pub->setAuteur($firstRow['pub_auteur']);
+            $pub->setDateCreation($firstRow['pub_date_creation']);
+            
+            // Créer les objets Commentaire
+            $commentaires = array();
+            foreach ($results as $row) {
+                $com = new Commentaire();
+                $com->setIdCommentaire($row['id_commentaire']);
+                $com->setIdPublication($row['id_publication']);
+                $com->setContenu($row['contenu']);
+                $com->setAuteur($row['auteur']);
+                $com->setDateCreation($row['date_creation']);
+                $com->setDateModification($row['date_modification']);
+                $com->setNombreLikes($row['nombre_likes']);
+                $commentaires[] = $com;
+            }
+            
+            return array(
+                'publication' => $pub,
+                'commentaires' => $commentaires
+            );
+        } catch (PDOException $e) {
+            error_log("Erreur lors de la récupération des commentaires avec publication : " . $e->getMessage());
             return false;
         }
     }
